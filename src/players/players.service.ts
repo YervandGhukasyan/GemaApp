@@ -21,7 +21,10 @@ export class PlayersService {
   }
 
   async findAll(): Promise<Player[]> {
-    return await this.playersRepository.find();
+    return await this.playersRepository.find({
+      order: { points: 'ASC' },
+      take: 20,
+    });
   }
 
   async findOne(id: number): Promise<Player> {
