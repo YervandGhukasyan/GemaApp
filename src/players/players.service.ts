@@ -22,7 +22,7 @@ export class PlayersService {
 
   async findAll(): Promise<Player[]> {
     return await this.playersRepository.find({
-      order: { points: 'ASC' },
+      order: { points: 'DESC' },
       take: 20,
     });
   }
