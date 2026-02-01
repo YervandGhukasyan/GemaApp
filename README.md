@@ -6,6 +6,7 @@ A NestJS TypeScript application that provides HTTP interface for managing player
 
 - RESTful API endpoints for player management
 - PostgreSQL database integration using TypeORM
+- Swagger/OpenAPI documentation for API testing
 - Data validation using class-validator
 - TypeScript support
 - Automatic database schema synchronization (development mode)
@@ -23,22 +24,35 @@ A NestJS TypeScript application that provides HTTP interface for managing player
 npm install
 ```
 
-2. Set up PostgreSQL database:
+2. Set up PostgreSQL database using Docker:
 ```bash
-createdb gameapp
+docker run -d \
+  --name postgres \
+  --restart unless-stopped \
+  -e POSTGRES_USER=app \
+  -e POSTGRES_PASSWORD='ChangeMeStrong!' \
+  -e POSTGRES_DB=gameapp \
+  -p 5432:5432 \
+  -v ~/pgdata:/var/lib/postgresql/data \
+  postgres:16
 ```
 
-3. Configure environment variables (optional, defaults are provided):
+3. Configure environment variables (optional, defaults match Docker setup):
 Create a `.env` file in the root directory:
 ```
 DB_HOST=localhost
 DB_PORT=5432
-DB_USERNAME=postgres
-DB_PASSWORD=postgres
+DB_USERNAME=app
+DB_PASSWORD=ChangeMeStrong!
 DB_NAME=gameapp
 PORT=3000
 NODE_ENV=development
 ```
+
+**Note:** The application is pre-configured to work with the Docker PostgreSQL setup above. Default credentials are:
+- Username: `app`
+- Password: `ChangeMeStrong!`
+- Database: `gameapp`
 
 ## Running the Application
 
@@ -54,6 +68,17 @@ npm run start:prod
 ```
 
 The application will be available at `http://localhost:3000`
+
+## Swagger Documentation
+
+Once the application is running, you can access the Swagger UI at:
+- **Swagger UI**: `http://localhost:3000/api`
+
+The Swagger interface allows you to:
+- View all available API endpoints
+- Test API requests directly from the browser
+- See request/response schemas
+- Try out different endpoints with sample data
 
 ## API Endpoints
 
